@@ -1,0 +1,12 @@
+node_modules
+packages
+.vscode/
+.vs/
+
+# Build results
+bin/
+obj/
+App_Data/
+
+# Publish results
+.publish/
