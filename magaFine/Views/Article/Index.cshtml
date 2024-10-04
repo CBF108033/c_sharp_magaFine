@@ -1,0 +1,63 @@
+﻿@Styles.Render("~/Content/CSS/article.css")
+@Styles.Render("~/Content/css")
+@model magaFine.Models.articles
+@{
+//Layout = null;
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.msg))
+{
+    <p>@ViewBag.msg</p>
+}
+else
+{
+    <div class="article">
+        <div class="leftSide">
+            <div class="container">
+                <div class="likeBT">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1550/1550594.png"
+                         alt=""><span>收藏</span>
+                </div>
+            </div>
+        </div>
+        <div class="mainContent">
+            <div class="wrapper">
+                <div class="title">@Model.title</div>
+                <div class="subTitle">
+                    <span class="subTitleName">Fiona&nbsp;&nbsp;&nbsp;</span><span class="subTitleDate">@Model.createdAt</span>
+                </div>
+                <div class="content ql-editor">
+                    @Html.Raw(Model.content)
+                </div>
+                <div class="articleInfo">
+                    <div class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="">2</div>
+                    <div class="articleLabels">
+                        @if (@ViewBag.hashtags != null && ViewBag.hashtags.Length > 0)
+                        {
+                            for (int i = 0; i < ViewBag.hashtags.Length; i++)
+                            {
+                                <span> #@ViewBag.hashtags[i]</span>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="authInfo">
+                    <div class="left">
+                        <div class="photo"
+                             style="background-image: url(&quot;https://i.imgur.com/0DMUdI7_d.webp?maxwidth=760&amp;fidelity=grand&quot;);">
+                        </div>
+                        <div class="contact">IG: giraffe_71_cy <br>FB: UNKNOW</div>
+                    </div>
+                    <div class="right">
+                        <div class="name">Fiona</div>
+                        <div class="description">
+                            空閒能腐化一個人，絕對的空閒便能徹底地腐化人們💖
+                            若到今天結束時我們都還無法釐清旅遊的意義，那想必我們昨天也無法釐清。
+                        </div>
+                        <div class="selfLabel"><span>#giraffe</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

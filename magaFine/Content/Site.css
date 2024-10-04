@@ -1,13 +1,15 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Nanum+Pen+Script&family=Noto+Serif+TC:wght@200;900&family=Pacifico&family=Sacramento&display=swap');
+
+/*body {
     padding-top: 50px;
     padding-bottom: 20px;
-}
+}*/
 
 /* Set padding to keep content from hitting the edges */
-.body-content {
+/*.body-content {
     padding-left: 15px;
     padding-right: 15px;
-}
+}*/
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
@@ -17,8 +19,47 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
+}*/
+
+/*↓↓↓↓ -- 自定義style -- ↓↓↓↓*/
+* {
+    /*font-family: "Open Sans", sans-serif;*/
+    font-family: "Noto Serif TC";
+    margin: 0;
+    padding: 0;
+    /*box-sizing: border-box;*/
 }
+
+div, p, span {
+    font-size: 14px;
+}
+
+:root {
+    --primary-color: #EDF0E7;
+    --secondary-color: #F6F8F0;
+    --primary-button-color: #DEE8CF;
+    --secondary-button-color: #707070;
+    --item-color: #E0E0E0;
+    --hover-color: #DF7878;
+}
+
+    textarea:focus, input:focus {
+        outline: none;
+    }
+
+.isDisabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+    pointer-events: none;
+}
+
+.notAllowed {
+    cursor: not-allowed;
+}
+/*↑↑↑↑ -- 自定義style -- ↑↑↑↑*/

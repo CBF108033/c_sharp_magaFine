@@ -1,0 +1,213 @@
+﻿@Styles.Render("~/Content/CSS/editArticle.css")
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@model magaFine.Models.articles
+@{
+    //Layout = null;
+    ViewBag.title = "Edit";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.msg))
+{
+    <p>@ViewBag.msg</p>
+}
+
+@if (Model == null)
+{
+    <p>NOT FOUND PAGE</p> }
+else
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="text-editor">
+            <div class="nav">
+                <div class="nav-left">
+                    <i class="fa-solid fa-arrow-left-long fa-xl" aria-hidden="true"
+                       style="color: rgb(63, 71, 85);"></i><span class="nav-left-item">列表</span>
+                </div>
+                <div class="nav-right">
+                    <button class="saveBT" id="save" value="save">儲存(不發佈)</button>
+                    <button class="saveBT" id="publish" value="publish">更新發佈</button>
+                </div>
+            </div>
+            <main>
+                <div class="saving"></div>
+                <input name="Id" hidden value="@Model.Id" />
+                <div class="selectors">
+                    <div class="selector">
+                        <div class="SelectTitle">類型</div>
+                        <div class="select-wrap">
+                            <select name="type" id="typeSelectorOption">
+                                <option value="專欄" @(Model.category == "專欄" ? "selected" : "")>專欄</option>
+                                <option value="系列" @(Model.category == "系列" ? "selected" : "")>系列</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="selector">
+                        <div class="SelectTitle">種類</div>
+                        <div class="select-wrap">
+                            <select name="category" id="categorySelectorOption">
+                                <option value="疑難雜症" @(Model.category == "疑難雜症" ? "selected" : "")>疑難雜症</option>
+                                <option value="作品集" @(Model.category == "作品集" ? "selected" : "")>作品集</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="topic">
+                    <div class="background-gray">
+                        <span>標題</span>
+                        <input type="text" placeholder="請輸入標題... " name="title" value="@Model.title">
+                    </div>
+                </div>
+                <div class="CSSgal" style="height: auto;">
+                    <s id="s1"></s><s id="s2"></s><s id="s3"></s><s id="s4"></s><s id="s5"></s>
+                    <div class="slider">
+                        <div>
+                            <div id="s1" class="quill ">
+                                <div class="ql-container ql-snow">
+                                    <div class="ql-editor" data-gramm="false" contenteditable="true"
+                                         data-placeholder="Write something awesome...">
+                                        <p>@Model.content</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hashTags">
+                    <span>標籤</span>
+                    <div class="wrapper">
+                        @if (ViewBag.hashtags != null && ViewBag.hashtags.Length > 0)
+                        {
+                            for (int i = 0; i < ViewBag.hashtags.Length; i++)
+                            {
+                                string idName = "hashTag" + i.ToString();
+                                <div class="hashTag" id=@idName> #@ViewBag.hashtags[i]<i class="fa-solid fa-xmark" aria-hidden="true" onclick="removeHashtag(event)"></i></div>
+                            }
+                        }
+                        <input type="text" placeholder="請輸入10字以內的標籤(Enter新增)，標籤不能包含#、空白" id="hashtagsInput" onkeyup="addHashtags(event)">
+                    </div>
+                </div>
+                <div class="uploadPhoto">
+                    <div class="wrapper"><span>封面圖片上傳</span><input type="text" id="photo" name="cover" onchange="coverChange(event)" value="@Model.cover"></div><img alt="封面圖片" src="@Model.cover">
+                </div>
+            </main>
+        </div>
+    }
+}
+
+<script>
+    var hashtagsLst = @Html.Raw(Json.Encode(ViewBag.hashtags));
+    $(document).ready(function () {
+
+        if (@Html.Raw(ViewBag.success.ToString().ToLower())) {
+            alert("@ViewBag.msg");
+        }
+
+        $("#save").click(function () {
+            var hashTagString = hashtagsLst.join(",");
+            var data = new FormData($('form')[0])
+            data.append("action", "save");
+            data.append("content", $('.ql-editor').html());
+            data.append("hashtags", hashTagString);
+            sendData(data);
+        });
+
+        function sendData(data) {
+            $.ajax({
+                url: '@Url.Action("Edit")',
+                method: 'POST',
+                data: data,
+                contentType: false,  // 設為 false 才能正確傳送 FormData，讓瀏覽器自動設置正確的內容類型
+                processData: false,  // 不處理數據，禁止 jQuery 自動將數據轉換為字符串
+                success: function (res) {
+                    console.log(res.msg);
+                    window.location.reload();
+                },
+                error: function (err) {
+                    console.log("Error", err);
+                }
+            });
+        }
+
+        //阻止按下 Enter 時的表單送出，因為enter要給addHashtags使用
+        $('form').on('keypress', function (event) {
+            if (event.key === 'Enter' || event.keyCode === 13) {
+                event.preventDefault();
+            }
+        })
+    });
+
+    /**
+     * 新增hashtags
+     */
+    const addHashtags = (event) => {
+        event.stopPropagation();
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            var replacedTag = event.target.value.replace(/(\r\n|\n|\r|\s)/gm, "");
+            const status = isValidHashtag(event, replacedTag)
+            if (status.res) {
+                var newTag = document.createElement('div');
+                newTag.className = 'hashTag';
+                newTag.innerHTML = `#${replacedTag} <i class="fa-solid fa-xmark" aria-hidden="true" onclick="removeHashtag(event)"></i>`;
+                //取得所有class是hashTag
+                var hashtagElements = document.querySelectorAll('.hashTag');
+                if (hashtagElements.length > 0) {
+                    var lastHashtag = hashtagElements[hashtagElements.length - 1];
+                    //新的插入到最後一個
+                    lastHashtag.parentNode.insertBefore(newTag, lastHashtag.nextSibling);
+                } else { // 沒有hashtag就插入input之前
+                    var inputElement = document.querySelector('#hashtagsInput');
+                    inputElement.parentNode.insertBefore(newTag, inputElement);
+                }
+                hashtagsLst.push(replacedTag);
+                event.target.value = "";
+            } else {
+                alert(status.error)
+            }
+        }
+    }
+
+    /**
+     * 移除hashtags
+     */
+    const removeHashtag = (e) => {
+        var hashtagValue = e.target.parentNode.innerText.split("#")[1].trim();
+        var index = hashtagsLst.indexOf(hashtagValue)
+        //console.log(index);
+        if (index > -1) {
+            // hashtagsLst 移除 hashtag
+            hashtagsLst.splice(index, 1);
+            // 移除 DOM 元素
+            e.target.parentNode.remove();
+        }
+        console.log(hashtagsLst);
+    }
+
+    const isValidHashtag = (e, hashtag) => {
+        const status = { res: false, error: "" };
+        if (hashtag === "") {
+            status.error = "輸入不得為空";
+        } else if (hashtag.length > 10) {
+            status.error = "hashtag字數不得超過10字";
+        } else if (hashtag.includes("#")) {
+            status.error = "hashtag不得包含#";
+        } else if (hashtag != "" && hashtagsLst.includes(hashtag)) {
+            e.target.value = "";
+            status.error = "hashtag不得重複";
+        } else {
+            status.res = true;
+        }
+        return status;
+    }
+
+    /**
+     * 封面URL更改
+     */
+    const coverChange = (e) => {
+        console.log(e.target.value);
+        $(".uploadPhoto img").attr("src", e.target.value);
+    }
+</script>

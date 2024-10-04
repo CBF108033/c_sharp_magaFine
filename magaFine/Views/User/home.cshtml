@@ -1,0 +1,202 @@
+﻿@Styles.Render("~/Content/CSS/homePage.css")
+@Styles.Render("~/Content/css")
+@model List<magaFine.Models.articles>
+@{
+    //Layout = null;
+    ViewBag.Title = "homePage";
+}
+
+<div class="homePage">
+    <div class="nav">
+        <div class="nav-left">
+            <a href="/user/64fc5adf46f0fccffa6e19dd">
+                <i class="fa-solid fa-arrow-left-long fa-xl"
+                   aria-hidden="true" style="color: rgb(63, 71, 85);"></i><span class="nav-left-item">主頁</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <a href="/">
+                <i class="fa-solid fa-house-chimney fa-xl" aria-hidden="true"
+                   style="color: rgb(63, 71, 85);"></i>
+            </a>
+        </div>
+    </div>
+    <div class="main-left main-left-mobile" style="display: none;">
+        <div class="title row-align"><span>F</span></div>
+        <div class="content">
+            <div class="add row-align">
+                <a title="新增文章" href="/article/create">
+                    <i class="fa-solid fa-plus"
+                       aria-hidden="true" style="color: rgb(63, 71, 85);"></i>
+                </a>
+            </div>
+            <div class="item row-align">
+                <i class="fa-regular fa-newspaper fa-xl" aria-hidden="true"
+                   style="color: rgb(63, 71, 85);"></i>
+            </div>
+            <div class="item row-align">
+                <i class="fa-regular fa-file-lines fa-xl" aria-hidden="true"
+                   style="color: rgb(63, 71, 85);"></i>
+            </div>
+            <div class="item row-align">
+                <i class="fa-solid fa-gear fa-xl" aria-hidden="true"
+                   style="color: rgb(63, 71, 85);"></i>
+            </div>
+        </div>
+    </div>
+    <main>
+        <div class="wrapper">
+            <div class="main-left" style="display: flex;">
+                <div class="title"><span>Fiona</span></div>
+                <div class="content">
+                    <div class="add">
+                        <a href="/article/create">
+                            <i class="fa-solid fa-plus" aria-hidden="true"
+                               style="color: rgb(63, 71, 85);"></i><span>新增文章</span>
+                        </a>
+                    </div>
+                    <div class="homePage-main-items">
+                        <div class="item"><span>NEWS</span></div>
+                        <div class="item"><span>文章</span></div>
+                        <div class="item"><span>設定</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-right">
+                <span class="main-right-title">全部共 @Model.Count 筆</span>
+                <div class="myArticle">
+                    <div class="wrapper">
+                        @foreach (var article in Model)
+                        {
+                            <div class="item">
+                                <div class="container" onclick="window.location.href='@Url.Action("edit", "article", new { id = article.Id })'">
+                                    <div class="left">
+                                        <div class="cover">
+                                            <img src="@article.cover"
+                                                 alt="">
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="item-title">
+                                                <p>@article.title</p>
+                                            </div>
+                                            @if (article.content != "")
+                                            {
+                                                <div class="item-content">
+                                                    <p>
+                                                        @article.content.Substring(0, 100) ...
+                                                    </p>
+                                                </div>
+                                            }
+                                            <div class="item-date">
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="right">
+                                        @if (article.disploy != 1)
+                                        {
+                                            <div class="lock" onClick="disploy(event, @article.Id, 1)">
+                                                <i class="fa-solid fa-lock fa-xl" aria-hidden="true"
+                                                   style="color: #3f4755"></i>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="unlock" onClick="disploy(event, @article.Id, 0)">
+                                                <i class="fa-solid fa-unlock fa-xl" aria-hidden="true"
+                                                   style="color: rgb(120, 192, 70);"></i>
+                                            </div>
+                                        }
+
+                                        <div class="visible">
+                                            <i class="fa-solid fa-eye" aria-hidden="true"
+                                               style="color: rgb(63, 71, 85);"></i>
+                                        </div>
+                                        <div class="delete" style="display: block;" onclick="deleteArticle(event, '@article.Id')">
+                                            <i class="fa-solid fa-trash fa-xl"
+                                               aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    $(document).ready(function () {
+        if (@Html.Raw(ViewBag.success.ToString().ToLower())) {
+            alert("@ViewBag.msg");
+        }
+    });
+
+    function deleteArticle(e, id) {
+        e.stopPropagation();
+        if (confirm("Are you sure you want to delete this article?")) {
+            $.ajax({
+                url: "@Url.Action("Delete", "Article")/" + id,
+                type: "POST",
+                success: function (res) {
+                    console.log(res.msg)
+                    if (res.success) {
+                        window.location.reload();
+                    }
+                },
+                error: function (err) {
+                    console.log("Delete failed :(", err)
+                }
+            })
+        }
+    }
+
+    const checkScreenSize = () => {
+        if (window.innerWidth < 768) {
+            // 將 isMobile 狀態改為 true
+            if (document.querySelector('.main-left')) {
+                document.querySelectorAll('.main-left')[1].style.display = 'none';
+                document.querySelector('.main-left-mobile').style.display = 'flex';
+                document.querySelector('.main-right').classList.add('main-right-mobile');
+            }
+        } else {
+            // 將 isMobile 狀態改為 false
+            if (document.querySelector('.main-left')) {
+                document.querySelectorAll('.main-left')[1].style.display = 'flex';
+                document.querySelector('.main-left-mobile').style.display = 'none';
+                document.querySelector('.main-right').classList.remove('main-right-mobile');
+            }
+        }
+    }
+
+    const disploy = (e, id, disploy) => {
+        e.stopPropagation();
+        var data = new FormData();
+        data.append("disploy", disploy);
+        data.append("Id", id);
+
+        $.ajax({
+            url: "@Url.Action("UpdateDisploy", "Article")",
+            type: "POST",
+            data: data,
+            contentType: false,  // 設為 false 才能正確傳送 FormData，讓瀏覽器自動設置正確的內容類型
+            processData: false,  // 不處理數據，禁止 jQuery 自動將數據轉換為字符串
+            success: function (res) {
+                if (res.success) {
+                    window.location.reload();
+                } else {
+                    console.log(res.msg);
+                }
+            },
+            error: function (err) {
+                console.log("Error", err);
+            }
+        });
+    }
+
+    // 加載時檢查一次螢幕大小
+    window.onload = checkScreenSize;
+    // 當窗口大小改變時再次檢查
+    window.onresize = checkScreenSize;
+</script>

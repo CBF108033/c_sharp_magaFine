@@ -1,0 +1,18 @@
+﻿[
+  {
+    "outputFile": "Content/CSS/posts.css",
+    "inputFile": "Content/SCSS/posts.scss"
+  },
+  {
+    "outputFile": "Content/CSS/article.css",
+    "inputFile": "Content/SCSS/article.scss"
+  },
+  {
+    "outputFile": "Content/CSS/homePage.css",
+    "inputFile": "Content/SCSS/homePage.scss"
+  },
+  {
+    "outputFile": "Content/CSS/editArticle.css",
+    "inputFile": "Content/SCSS/editArticle.scss"
+  }
+]

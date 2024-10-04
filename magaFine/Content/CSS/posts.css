@@ -1,0 +1,75 @@
+﻿.posts {
+  margin: 50px 0; }
+
+.postWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 90px;
+  justify-content: center; }
+  .postWrapper .post {
+    display: flex;
+    width: 600px;
+    gap: 20px; }
+    .postWrapper .post .cover {
+      width: 50%;
+      height: 220px;
+      overflow: hidden; }
+      .postWrapper .post .cover img {
+        height: 220px;
+        width: 100%;
+        object-fit: cover; }
+    .postWrapper .post .info {
+      display: grid;
+      flex-direction: column;
+      width: 50%;
+      grid-template-rows: .5fr 2.5fr .5fr 2.5fr;
+      align-items: center;
+      height: 220px; }
+      .postWrapper .post .info .type {
+        font-size: 0.7em; }
+      .postWrapper .post .info a {
+        text-decoration: none;
+        color: black; }
+        .postWrapper .post .info a .title {
+          font-size: 1.3em;
+          font-weight: 900;
+          border-bottom: 2px solid transparent; }
+        .postWrapper .post .info a .title:hover {
+          text-decoration: underline;
+          text-decoration-thickness: 2px;
+          text-decoration-color: var(--hover-color); }
+      .postWrapper .post .info .authorNdate {
+        display: flex;
+        gap: 10px;
+        color: #a6a6a6;
+        font-style: italic;
+        font-weight: 200; }
+      .postWrapper .post .info .content {
+        overflow: auto;
+        text-overflow: ellipsis;
+        font-weight: 500;
+        max-height: -webkit-fill-available; }
+  .postWrapper .noResult {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #a6a6a6; }
+
+@media screen and (max-width: 600px) {
+  .post {
+    width: 90% !important;
+    background: #f0f1ef;
+    flex-wrap: wrap;
+    gap: 10px !important;
+    border-radius: 10px; }
+    .post .info {
+      width: 100% !important;
+      padding: 0 10px 10px; }
+  .cover {
+    width: 100% !important; }
+    .cover img {
+      width: 100% !important; } }
+
+.highlight {
+  color: red; }

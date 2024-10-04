@@ -2,6 +2,7 @@ node_modules
 packages
 .vscode/
 .vs/
+/Web.config
 
 # Build results
 bin/
