@@ -12,3 +12,6 @@ Source:
 
 3. [First MVC Project With Oracle Database using Entity Frame Work - Part 2/2](https://www.youtube.com/watch?v=tk_EDjTzZCE)
 4. [認識VS開發環境 - NuGet套件管理員](https://ithelp.ithome.com.tw/articles/10158563):套件工具
+5. [How to Implement JWT Token Authentication in Asp Net MVC](https://rutube.ru/video/70509d6db26c1c1365ee8026a0dda35b/):JWT
+
+
