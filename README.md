@@ -11,4 +11,4 @@ Source:
      </br></br><img src="https://i.imgur.com/2xg1fPu.png" alt="資源使用率" style="width: 30%; height: auto;">
 
 3. [First MVC Project With Oracle Database using Entity Frame Work - Part 2/2](https://www.youtube.com/watch?v=tk_EDjTzZCE)
-   
+4. [認識VS開發環境 - NuGet套件管理員](https://ithelp.ithome.com.tw/articles/10158563):套件工具
