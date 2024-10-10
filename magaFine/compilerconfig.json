@@ -14,5 +14,9 @@
   {
     "outputFile": "Content/CSS/editArticle.css",
     "inputFile": "Content/SCSS/editArticle.scss"
+  },
+  {
+    "outputFile": "Content/CSS/login.css",
+    "inputFile": "Content/SCSS/login.scss"
   }
 ]

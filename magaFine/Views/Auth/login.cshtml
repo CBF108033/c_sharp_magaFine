@@ -1,0 +1,64 @@
+﻿@Styles.Render("~/Content/CSS/login.css")
+@Styles.Render("~/Content/css")
+@{
+    ViewBag.title = "login";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div className='login' style="min-height: 100vh;">
+        <div className="container" style="grid-template-rows: 2fr 1fr 1fr 1fr 1fr;">
+            <div className="title">登入</div>
+            <div className="account">
+                <span>帳號: </span>
+                <input type="text" placeholder='名稱/Email' id='account' name="username"/>
+            </div>
+            <div className="password">
+                <span>密碼: </span>
+                <input type="password" id='password' name="password" />
+            </div>
+            <div className="login" id='loginPageLogin'>
+                <button className='loginBT' id='loginBT2' >LOGIN</button>
+            </div>
+            <p className="warning" ><span>*</span></p>
+            <div className="noAccount">
+                <span><Link to="/register" style=""color: #707070; textDecoration: underline #707070 solid;" />還沒有帳號嗎?</span>
+            </div>
+        </div>
+        <div className='bottom'></div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#loginBT2").click(function (e) {
+            e.preventDefault(); //未防止默認提交會導致頁面刷新，token json資料無法傳到ajax的success
+            var data = new FormData($('form')[0])
+            sendData(data);
+        });
+
+        function sendData(data) {
+            $.ajax({
+                url: '@Url.Action("Login")',
+                method: 'POST',
+                data: data,
+                contentType: false,  // 設為 false 才能正確傳送 FormData，讓瀏覽器自動設置正確的內容類型
+                processData: false,  // 不處理數據，禁止 jQuery 自動將數據轉換為字符串
+                success: function (res) {
+                    if (res.token) {
+                        localStorage.setItem('jwtToken', res.token);
+                        //window.location.href = "/article/create";
+                        alert(res.message);
+                    } else {
+                        alert(res.message);
+                    }
+                },
+                error: function (err) {
+                    console.log("Error", err);
+                }
+            });
+        }
+    });
+</script>

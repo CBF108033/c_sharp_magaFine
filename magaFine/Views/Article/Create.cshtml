@@ -93,7 +93,8 @@
 <script>
     var hashtagsLst = [];
     $(document).ready(function () {
-        $("#save").click(function () {
+        $("#save").click(function (e) {
+            e.preventDefault(); //未防止默認提交會導致頁面刷新
             var data = new FormData($('form')[0])
             data.append("content", $('.ql-editor').html());
 
@@ -111,12 +112,27 @@
                 data: data,
                 contentType: false,  // 設為 false 才能正確傳送 FormData，讓瀏覽器自動設置正確的內容類型
                 processData: false,  // 不處理數據，禁止 jQuery 自動將數據轉換為字符串
+                beforeSend: function (xhr) {
+                    // 從 localStorage 中取出 JWT
+                    const token = localStorage.getItem('jwtToken');
+                    if (token) {
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                    }
+                },
                 success: function (res) {
                     console.log(res.msg);
                     window.location.href = "@Url.Action("home","user")";
                 },
-                error: function (err) {
-                    console.log("Error", err);
+                error: function (xhr) {
+                    console.log("Error", xhr);
+                    if (xhr.status === 401) {
+                        // 如果是 401 狀態碼，顯示 '未登入' 訊息
+                        var response = JSON.parse(xhr.responseText);
+                        alert(response.message);  // 顯示 "未登入" 訊息
+                        window.location.href = "/auth/login";
+                    } else {
+                        console.log("Error", xhr);
+                    }
                 }
             });
         }
