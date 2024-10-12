@@ -16,20 +16,22 @@ namespace magaFine.Models
     public partial class magaFineEntities : DbContext
     {
         public magaFineEntities()
-            : base("name=magaFineEntities")
+            : base("name=MySqlConnectionString")
         {
         }
     
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            throw new UnintentionalCodeFirstException();
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Properties<decimal>().Configure(config => config.HasPrecision(18, 4));
+        //    //throw new UnintentionalCodeFirstException();
+        //}
     
         public virtual DbSet<articles> articles { get; set; }
 
-        internal void SaveChange()
-        {
-            throw new NotImplementedException();
-        }
+        //internal void SaveChange()
+        //{
+        //    //throw new NotImplementedException();
+        //    base.SaveChanges();
+        //}
     }
 }

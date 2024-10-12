@@ -47,7 +47,6 @@ namespace magaFine.Controllers
         public ActionResult Edit(string id)
         {
             /*
-            // 使用mysql
             List <articles> dataLst = new List<articles>();
             string[] hashtags = new string[0];
 
@@ -79,10 +78,10 @@ namespace magaFine.Controllers
             ViewBag.hashtags = hashtags;
             ViewBag.success = TempData["success"] == null ? false : true;
             ViewBag.msg = TempData["message"] == null ? "" : TempData["message"];
+
             return View(dataLst[0]);
             */
 
-            // 使用Mssql(Azure)
             articles article = null;
             string[] hashtags = new string[0];
             Boolean isValidId = int.TryParse(id, out int validId);

@@ -81,8 +81,8 @@ namespace magaFine.Services
                 //    default:
                 //        break;
                 //}
-                db.Entry(article).CurrentValues.SetValues(updateData);
                 updateData.updatedAt = DateTime.Now;
+                db.Entry(article).CurrentValues.SetValues(updateData);
                 db.SaveChanges();
 
                 return StatusMessage(true, "Article updated successfully!");
