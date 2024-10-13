@@ -1,3 +1,12 @@
+**資安防禦：**
+- CSRF：使用AntiForgeryToken
+- XSS：Razor語法自動編碼、ValidateRequest請求驗證
+- SQL injection：使用ORM框架 Entity Framework(EF)
+
+**身分驗證：**
+- JWT
+<br><br>
+
 Source:
 1. [How To Deploy ASP.NET Application with Azure SQL Database on Microsoft Azure Cloud](https://www.youtube.com/watch?v=jT8eA9A7qXE&t=442s)
 
