@@ -28,6 +28,8 @@ namespace magaFine.Models
     
         public virtual DbSet<articles> articles { get; set; }
 
+        public virtual DbSet<users> users { get; set; }
+
         //internal void SaveChange()
         //{
         //    //throw new NotImplementedException();

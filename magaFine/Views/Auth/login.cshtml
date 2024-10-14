@@ -24,7 +24,7 @@
             </div>
             <p className="warning" ><span>*</span></p>
             <div className="noAccount">
-                <span><Link to="/register" style=""color: #707070; textDecoration: underline #707070 solid;" />還沒有帳號嗎?</span>
+                <span>@Html.ActionLink("還沒有帳號嗎?", "register", null, new { style = "color: #707070; textDecoration: underline #707070 solid;" })</span>
             </div>
         </div>
         <div className='bottom'></div>
@@ -33,6 +33,12 @@
 
 <script>
     $(document).ready(function () {
+        $(document).ready(function () {
+            if (@Html.Raw(ViewBag.success.ToString().ToLower())) {
+                alert("@ViewBag.msg");
+            }
+        });
+
         $("#loginBT2").click(function (e) {
             e.preventDefault(); //未防止默認提交會導致頁面刷新，token json資料無法傳到ajax的success
             var data = new FormData($('form')[0])

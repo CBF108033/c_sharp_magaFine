@@ -7,6 +7,7 @@ using magaFine.Models;
 using HtmlAgilityPack;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using magaFine.Helpers;
 
 namespace magaFine.Controllers
 {
@@ -23,6 +24,12 @@ namespace magaFine.Controllers
                 //內文移除空白
                 article.content = Regex.Replace(article.content, @"\s+", " ").Trim();
             }
+
+            var userData = Session_Helper.GetUserData();
+            var user = userData!=null ? userData as users : null;
+
+            ViewBag.userName = user != null ? user.username : null;
+
             return View(articles);
         }
 
