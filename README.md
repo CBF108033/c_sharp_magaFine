@@ -6,18 +6,18 @@
 以ASP.NET MVC framework建立網頁，搭配MSSQL(Azure雲端資料庫)作為DBMS，並加入JWT驗證以及基本的資安防禦。</br>
 ＊另有搭配MySQL資料庫的版本[(branch - mysql_version)](https://github.com/CBF108033/c_sharp_magaFine/tree/mysql_version)
 
-- ### **ASP.NET MVC Framework：**
+- ### **ASP.NET MVC Framework**
    ASP.NET MVC 是微軟基於MVC設計模式的Web框架，將應用分為模型、視圖、控制器三部分，提升了程式碼的可維護性、可測試性，適合構建動態Web應用。
 
-- ### **MSSQL：**
+- ### **MSSQL**
   MSSQL（Microsoft SQL Server）是微軟推出的關聯式資料庫管理系統，提供資料存儲、查詢、分析和管理功能，適用於企業級應用。
 
-- ### **資安防禦：**
+- ### **資安防禦**
    - CSRF：使用AntiForgeryToken
    - XSS：Razor語法自動編碼、ValidateRequest請求驗證
    - SQL injection：使用ORM框架 Entity Framework(EF)
 
-- ### **身分驗證：**
+- ### **身分驗證**
    - JWT
 <br><br>
 
