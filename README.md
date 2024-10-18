@@ -3,7 +3,8 @@
 由MagaFine的原版本[(node.js版本)](https://github.com/CBF108033/MagaFine_Web)翻製成C#版本的網頁，該版本僅重製主要的CRUD功能。
 
 ## 技術
-以ASP.NET MVC framework建立網頁，搭配MSSQL(Azure雲端資料庫)作為DBMS，並加入JWT驗證以及基本的資安防禦。
+以ASP.NET MVC framework建立網頁，搭配MSSQL(Azure雲端資料庫)作為DBMS，並加入JWT驗證以及基本的資安防禦。</br>
+＊另有搭配MySQL資料庫的版本[(branch - mysql_version)](https://github.com/CBF108033/c_sharp_magaFine/tree/mysql_version)
 
 - ### **ASP.NET MVC Framework：**
    ASP.NET MVC 是微軟基於MVC設計模式的Web框架，將應用分為模型、視圖、控制器三部分，提升了代碼的可維護性、可測試性，適合構建動態Web應用並支持TDD。
